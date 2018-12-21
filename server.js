@@ -20,13 +20,19 @@ const db = knex({
   }
 });
 
+console.log(process.env.THING);
+
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
 
-app.listen(3000, () => {
-  console.log("app is running on port 3000");
+app.listen(process.env.PORT, () => {
+  console.log(`app is running on port ${process.env.PORT}`);
+});
+
+app.get("/", (req, res) => {
+  res.send("welcome home");
 });
 
 app.get("/profile/:id", profile.handleProfileGet(db));
