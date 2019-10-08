@@ -1,46 +1,50 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const uuidv4 = require("uuid/v4");
 const bcrypt = require("bcrypt-nodejs");
 const cors = require("cors");
 const knex = require("knex");
+const morgan = require("morgan");
 
 const register = require("./controllers/register");
 const signin = require("./controllers/signin");
 const profile = require("./controllers/profile");
 const image = require("./controllers/image");
+const auth = require("./controllers/authorization");
+const signout = require("./controllers/signout");
 
 const db = knex({
   client: "pg",
-  connection: {
-    host: "127.0.0.1",
-    user: "postgres",
-    password: "1234",
-    database: "smart-brain"
-  }
+  connection: process.env.POSTGRES_URI
 });
-
-console.log(process.env.THING);
 
 const app = express();
 
-app.use(bodyParser.json());
 app.use(cors());
-
-app.listen(process.env.PORT, () => {
-  console.log(`app is running on port ${process.env.PORT}`);
-});
+app.use(morgan("combined"));
+console.log("hi");
+app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
-  res.send("welcome home");
+  res.send("It's Working!");
+});
+app.post("/signin", signin.signinAuthentication(db, bcrypt));
+app.post("/signout", auth.requireAuth, signout.handleSignout);
+app.post("/register", (req, res) => {
+  register.handleRegister(req, res, db, bcrypt);
+});
+app.get("/profile/:id", auth.requireAuth, (req, res) => {
+  profile.handleProfileGet(req, res, db);
+});
+app.post("/profile/:id", auth.requireAuth, (req, res) => {
+  profile.handleProfileUpdate(req, res, db);
+});
+app.put("/image", auth.requireAuth, (req, res) => {
+  image.handleImage(req, res, db);
+});
+app.post("/imageurl", auth.requireAuth, (req, res) => {
+  image.handleApiCall(req, res);
 });
 
-app.get("/profile/:id", profile.handleProfileGet(db));
-
-app.put("/image", image.handleImage(db));
-
-app.post("/signin", signin.handleSignin(db, bcrypt));
-
-app.post("/register", register.handleRegister(db, bcrypt));
-
-app.post("/imageurl", image.handleApiCall());
+app.listen(3000, () => {
+  console.log("app is running on port 3000");
+});
