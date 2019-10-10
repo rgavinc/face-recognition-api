@@ -1,27 +1,23 @@
 const Clarifai = require("clarifai");
-var constants = require("../env");
-let apiKey = constants.CLARIFAI_KEY;
-
-console.log(constants.CLARIFAI_KEY);
+const { CLARIFAI_KEY } = process.env;
 
 //You must add your own API key here from Clarifai.
 const app = new Clarifai.App({
-  apiKey
+  apiKey: CLARIFAI_KEY
 });
 
 const handleApiCall = (req, res) => {
   console.log("in handle api");
+  console.log(app.models.predict(Clarifai.FACE_DETECT_MODEL, req.body.input));
   app.models
     .predict(Clarifai.FACE_DETECT_MODEL, req.body.input)
-    .then(data => {
-      console.log(data);
-      res.json(data);
-    })
-    .catch(err => res.status(400).json("unable to work with API"));
+    .then(data => res.json(data))
+    .catch(err => {
+      return res.status(400).json({ error: err.statusText });
+    });
 };
 
 const handleImage = (req, res, db) => {
-  console.log(constants.CLARIFAI_KEY);
   const { id } = req.body;
   db("users")
     .where("id", "=", id)

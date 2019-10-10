@@ -21,7 +21,7 @@ const app = express();
 
 app.use(cors());
 app.use(morgan("combined"));
-console.log("hi");
+
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {

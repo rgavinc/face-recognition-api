@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
-var constants = require("../env");
-let jwtSecret = constants.JWT_SECRET;
+const { JWT_SECRET } = process.env;
 const redis = require("redis");
 
 const redisClient = redis.createClient(process.env.REDIS_URI);
@@ -44,7 +43,7 @@ const getAuthTokenId = (req, res) => {
 
 const signToken = email => {
   const jwtPayload = { email };
-  return jwt.sign({ jwtPayload }, jwtSecret, { expiresIn: "2 days" });
+  return jwt.sign({ jwtPayload }, JWT_SECRET, { expiresIn: "2 days" });
 };
 
 const setToken = (key, val) => {
