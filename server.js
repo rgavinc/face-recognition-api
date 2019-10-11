@@ -16,7 +16,7 @@ const db = knex({
   client: "pg",
   connection: {
     connectionString: process.env.POSTGRES_URI,
-    ssl: process.env.PROD
+    ssl: process.env.NODE_ENV === "prod"
   }
 });
 
