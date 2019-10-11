@@ -18,7 +18,6 @@ const db = knex({
 });
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(morgan("combined"));
@@ -46,6 +45,6 @@ app.post("/imageurl", auth.requireAuth, (req, res) => {
   image.handleApiCall(req, res);
 });
 
-app.listen(port, () => {
-  console.log(`app is running on port ${port}`);
+app.listen(process.env.PORT || 3000, () => {
+  console.log(`app is running on port ${process.env.PORT || 3000}`);
 });
