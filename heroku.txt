@@ -1,0 +1,5 @@
+- intstall heroku
+- heroku create (initiates app)
+- heroku open (opens app)
+- git remote -v (get info about remote)
+- git push heroku master
