@@ -14,7 +14,10 @@ const signout = require("./controllers/signout");
 
 const db = knex({
   client: "pg",
-  connection: { connectionString: process.env.DATABASE_URL, ssl: true }
+  connection: {
+    connectionString: process.env.POSTGRES_URI,
+    ssl: process.env.PROD
+  }
 });
 
 const app = express();
