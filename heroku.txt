@@ -4,3 +4,6 @@
 - git remote -v (get info about remote)
 - git push heroku master
 - heroku logs --tail (check logs)
+- heroku addons (to get addons)
+- heroku pg:psql (get inside the database)
+- what does ssl do?
