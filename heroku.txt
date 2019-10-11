@@ -3,3 +3,4 @@
 - heroku open (opens app)
 - git remote -v (get info about remote)
 - git push heroku master
+- heroku logs --tail (check logs)
