@@ -7,6 +7,8 @@ services:
     build: ./
     command: npm start
     working_dir: /usr/src/smart-brain-api
+    env_file:
+      - .env
     environment:
       POSTGRES_URI: postgres://sally:secret@postgres:5432/smart-brain-docker
       REDIS_URI: redis://redis:6379

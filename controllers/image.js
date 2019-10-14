@@ -1,5 +1,5 @@
 const Clarifai = require("clarifai");
-const { CLARIFAI_KEY } = require("../utils/secure-vars");
+const { CLARIFAI_KEY } = process.env;
 
 //You must add your own API key here from Clarifai.
 const app = new Clarifai.App({
