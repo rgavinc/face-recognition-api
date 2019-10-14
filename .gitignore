@@ -9,10 +9,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-env.js
-docker-compose.yml
-Dockerfile
-postgres
+utils/secure-vars.js
 
 # Runtime data
 pids

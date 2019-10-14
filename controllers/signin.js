@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET } = require("../utils/secure-vars");
 const redis = require("redis");
 
 const redisClient = redis.createClient(process.env.REDIS_URI);
